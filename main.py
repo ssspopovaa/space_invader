@@ -9,7 +9,9 @@ pygame.display.set_icon(icon)
 
 screen = pygame.display.set_mode((800, 600))
 
-playerImg = pygame.image.load('battleship.png')
+# playerImg = pygame.image.load('battleship.png')
+playerImg = pygame.image.load('spaceship1.png')
+
 playerX = 370
 playerY = 480
 playerX_change = 0
@@ -34,7 +36,9 @@ while running:
     if event.type == pygame.KEYUP:
         if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
             playerX_change = 0
-    
+        if event.key == pygame.K_q:
+            running = False
+
     playerX += playerX_change
     player(playerX, playerY)
     pygame.display.update()
