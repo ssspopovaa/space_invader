@@ -1,6 +1,7 @@
 import pygame
 import random
 import math
+from pygame import mixer
 
 pygame.init()
 
@@ -11,6 +12,11 @@ pygame.display.set_icon(icon)
 
 screen = pygame.display.set_mode((800, 600))
 backgroundImg = pygame.image.load('background.png')
+
+mixer.music.load('background.wav')
+mixer.music.play(-1)
+
+
 
 #Score
 score_value = 0
@@ -46,6 +52,9 @@ bulletY = 480
 bulletX_change = 0
 bulletY_change = 1
 bullet_state = 0
+bullet_sound = mixer.Sound('laser.wav')
+bullet_colision_sound = mixer.Sound('explosion.wav')
+
 def show_score(x,y):
     score = font.render("Score: " + str(score_value), True, (255,255,255))
     screen.blit(score,(x, y))
@@ -87,6 +96,7 @@ while running:
                 if not bullet_state:
                     bullet_state = 1
                     bulletX = playerX
+                    bullet_sound.play()
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 playerX_change = 0
@@ -111,6 +121,7 @@ while running:
         if enemyY[i] >= 600 - 64:
             enemyY[i] = 0
         if isCollision(enemyX[i], enemyY[i], bulletX, bulletY):
+            bullet_colision_sound.play()
             bulletY = 480
             bullet_state = 0
             score_value += 1
