@@ -11,7 +11,14 @@ pygame.display.set_icon(icon)
 
 screen = pygame.display.set_mode((800, 600))
 backgroundImg = pygame.image.load('background.png')
-score = 0
+
+#Score
+score_value = 0
+
+# font = pygame.font.Font('freesansbold.ttf', 32)
+font = pygame.font.Font('digital.ttf', 32)
+textX = 10
+textY = 10
 
 # playerImg = pygame.image.load('battleship.png')
 playerImg = pygame.image.load('spaceship1.png')
@@ -39,7 +46,10 @@ bulletY = 480
 bulletX_change = 0
 bulletY_change = 1
 bullet_state = 0
-
+def show_score(x,y):
+    score = font.render("Score: " + str(score_value), True, (255,255,255))
+    screen.blit(score,(x, y))
+    
 def player(x, y):
     screen.blit(playerImg,(x, y))
 
@@ -103,7 +113,7 @@ while running:
         if isCollision(enemyX[i], enemyY[i], bulletX, bulletY):
             bulletY = 480
             bullet_state = 0
-            score += 1
+            score_value += 1
             enemyX[i] = random.randint(0, 735)
             enemyY[i] = 0
         enemy(enemyX[i], enemyY[i], i)
@@ -117,6 +127,6 @@ while running:
         bulletY -= bulletY_change
             
     player(playerX, playerY)
-    
-    
+    show_score(textX, textY)
+
     pygame.display.update()
